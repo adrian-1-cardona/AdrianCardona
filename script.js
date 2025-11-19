@@ -466,3 +466,47 @@ function createThemeToggle() {
 
 // Initialize theme toggle (uncomment if you want this feature)
 // createThemeToggle();
+
+// Scroll to home section on page load/refresh
+window.addEventListener('load', () => {
+    // Scroll to top immediately
+    window.scrollTo({
+        top: 0,
+        behavior: 'instant'
+    });
+    
+    // Also ensure the home section is in view
+    const homeSection = document.getElementById('home');
+    if (homeSection) {
+        homeSection.scrollIntoView({ behavior: 'instant', block: 'start' });
+    }
+    
+    // Update active nav link to home
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#home') {
+            link.classList.add('active');
+        }
+    });
+});
+
+// Also handle page refresh with beforeunload
+window.addEventListener('beforeunload', () => {
+    // Store that we want to go to home on next load
+    sessionStorage.setItem('scrollToHome', 'true');
+});
+
+// Check if we should scroll to home after page load
+window.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('scrollToHome')) {
+        sessionStorage.removeItem('scrollToHome');
+        window.scrollTo(0, 0);
+        
+        // Set home as active in navigation
+        const homeLink = document.querySelector('a[href="#home"]');
+        if (homeLink) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            homeLink.classList.add('active');
+        }
+    }
+});
