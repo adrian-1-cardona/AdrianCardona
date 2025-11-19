@@ -1,0 +1,21 @@
+{
+  "name": "adrian-cardina-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website for Adrian Cardina",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 3000",
+    "build": "echo 'Build complete'",
+    "start": "python -m http.server 8000"
+  },
+  "keywords": [
+    "portfolio",
+    "web-development",
+    "personal-website",
+    "adrian-cardona"
+  ],
+  "author": "Adrian Cardina",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
