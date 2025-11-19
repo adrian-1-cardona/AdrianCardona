@@ -1,4 +1,4 @@
-# Adrian Cardina - Personal Portfolio
+# Adrian Cardona - Personal Portfolio
 
 A modern, responsive personal portfolio website showcasing my skills, experience, and projects.
 
@@ -109,4 +109,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-Made with ❤️ by Adrian Cardina
+Made with Passion by Adrian Cardona
