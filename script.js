@@ -509,4 +509,289 @@ window.addEventListener('DOMContentLoaded', () => {
             homeLink.classList.add('active');
         }
     }
+    
+    // Initialize professional UI enhancements
+    initProfessionalEnhancements();
 });
+
+// Professional UI Enhancement Functions
+function initProfessionalEnhancements() {
+    initScrollAnimations();
+    initInteractiveElements();
+    initNavbarEnhancements();
+    initLoadingStates();
+    initMicroInteractions();
+}
+
+// Enhanced scroll animations with Intersection Observer
+function initScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                
+                // Add stagger effect for grid items
+                const parent = entry.target.parentElement;
+                if (parent.classList.contains('projects-grid') || 
+                    parent.classList.contains('skill-items') ||
+                    parent.classList.contains('experience-grid')) {
+                    
+                    const siblings = Array.from(parent.children);
+                    siblings.forEach((sibling, index) => {
+                        setTimeout(() => {
+                            sibling.classList.add('visible');
+                        }, index * 100);
+                    });
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Add animation classes to elements
+    const cards = document.querySelectorAll('.project-card, .skill-item, .experience-item, .education-item');
+    cards.forEach((card, index) => {
+        card.classList.add('fade-in-up', `stagger-delay-${(index % 6) + 1}`);
+        observer.observe(card);
+    });
+
+    // Add section animation
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        section.classList.add('fade-in-up');
+        observer.observe(section);
+    });
+}
+
+// Enhanced interactive elements
+function initInteractiveElements() {
+    // Enhanced hover effects for cards
+    const cards = document.querySelectorAll('.card, .project-card, .experience-item, .education-item');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.classList.add('glow-effect');
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.classList.remove('glow-effect');
+        });
+    });
+
+    // Enhanced skill items
+    const skillItems = document.querySelectorAll('.skill-item');
+    skillItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.05)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
+
+    // Enhanced social links
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-4px) scale(1.1)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
+}
+
+// Enhanced navbar with advanced scroll effects
+function initNavbarEnhancements() {
+    const navbar = document.querySelector('.navbar');
+    let lastScrollY = window.scrollY;
+    let isScrollingDown = false;
+    
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        
+        // Enhanced backdrop blur
+        if (currentScrollY > 50) {
+            navbar.classList.add('scrolled');
+            navbar.style.backdropFilter = 'blur(20px)';
+        } else {
+            navbar.classList.remove('scrolled');
+            navbar.style.backdropFilter = 'blur(10px)';
+        }
+        
+        // Smart hide/show behavior
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            if (!isScrollingDown) {
+                isScrollingDown = true;
+                navbar.style.transform = 'translateY(-100%)';
+            }
+        } else {
+            if (isScrollingDown) {
+                isScrollingDown = false;
+                navbar.style.transform = 'translateY(0)';
+            }
+        }
+        
+        lastScrollY = currentScrollY;
+    });
+}
+
+// Loading states for interactive elements
+function initLoadingStates() {
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Add loading state
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            
+            // Simulate form processing
+            setTimeout(() => {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+                
+                // Show success message
+                showEnhancedNotification('Message sent successfully!', 'success');
+                contactForm.reset();
+            }, 2000);
+        });
+    }
+}
+
+// Micro-interactions and polish
+function initMicroInteractions() {
+    // Button ripple effect
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: rgba(255, 255, 255, 0.5);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+            `;
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+
+    // Enhanced form interactions
+    const formGroups = document.querySelectorAll('.form-group');
+    formGroups.forEach(group => {
+        const input = group.querySelector('input, textarea');
+        if (input) {
+            input.addEventListener('focus', () => {
+                group.style.transform = 'scale(1.02)';
+                group.style.zIndex = '10';
+            });
+            
+            input.addEventListener('blur', () => {
+                group.style.transform = '';
+                group.style.zIndex = '';
+            });
+        }
+    });
+}
+
+// Enhanced notification system
+function showEnhancedNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? 'linear-gradient(135deg, #10B981, #059669)' : 'linear-gradient(135deg, #EF4444, #DC2626)'};
+        color: white;
+        padding: 18px 24px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        transform: translateX(120%);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: 400px;
+        backdrop-filter: blur(10px);
+    `;
+    
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Auto remove
+    setTimeout(() => {
+        notification.style.transform = 'translateX(120%)';
+        setTimeout(() => {
+            notification.remove();
+        }, 400);
+    }, 4000);
+}
+
+// Add ripple animation CSS
+const rippleStyles = document.createElement('style');
+rippleStyles.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    .loading::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 50%;
+        left: 50%;
+        margin-left: -10px;
+        margin-top: -10px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+`;
+document.head.appendChild(rippleStyles);
