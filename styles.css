@@ -530,14 +530,15 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-secondary);
     margin-bottom: 8px;
     position: relative;
-    padding-left: 20px;
+    padding-left: 25px;
 }
 
 .timeline-content li::before {
     content: '•';
     color: var(--primary-color);
     position: absolute;
-    left: 0;
+    left: 8px;
+    top: 0;
 }
 
 /* Skills Section */
