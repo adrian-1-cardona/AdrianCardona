@@ -521,6 +521,11 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.6;
 }
 
+.timeline-content p:not(:first-of-type) {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
 .timeline-content ul {
     list-style: none;
     padding: 0;
