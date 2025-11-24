@@ -289,6 +289,50 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.1;
 }
 
+/* Text Animation Effects */
+.text-reveal {
+    display: inline-block;
+    animation: slideInLeft 1s ease-out;
+}
+
+.name-highlight {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: slideInRight 1s ease-out 0.3s both;
+    position: relative;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Fade in animations */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1.2s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .hero-subtitle {
     font-size: 1.5rem;
     color: var(--text-secondary);
@@ -367,6 +411,49 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
 }
 
+
+
+/* Global Card Enhancements */
+.timeline-item,
+.skill-category,
+.education-card,
+.project-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-item::before,
+.skill-category::before,
+.education-card::before,
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent);
+    transition: left 0.6s ease;
+    z-index: 0;
+}
+
+.timeline-item:hover::before,
+.skill-category:hover::before,
+.education-card:hover::before,
+.project-card:hover::before {
+    left: 100%;
+}
+
+.timeline-item:hover,
+.skill-category:hover,
+.education-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+
+
 .about-image-placeholder {
     min-height: 300px;
     display: flex;
@@ -374,19 +461,7 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
 }
 
-.scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bounce 2s infinite;
-}
 
-.scroll-indicator a {
-    color: var(--text-secondary);
-    font-size: 24px;
-    text-decoration: none;
-}
 
 /* About Section */
 .about {
